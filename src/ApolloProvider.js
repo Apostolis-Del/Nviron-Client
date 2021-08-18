@@ -19,7 +19,7 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
   });
 
 const httpLink = createUploadLink({
-    uri: 'http://localhost:5000/graphql',
+    uri: 'https://polar-shelf-82667.herokuapp.com',
     headers: { authorization: `bearer [token]` }
 })
 

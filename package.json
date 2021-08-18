@@ -52,7 +52,6 @@
       "react-app/jest"
     ]
   },
-  "proxy": "http://localhost:5000/graphql",
   "browserslist": {
     "production": [
       ">0.2%",
@@ -67,5 +66,7 @@
   },
   "devDependencies": {
     "browserify-css": "^0.15.0"
-  }
+  },
+  "proxy": "https://polar-shelf-82667.herokuapp.com/",
+
 }
