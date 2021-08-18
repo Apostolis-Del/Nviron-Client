@@ -22,6 +22,9 @@ import MarinePin from './pins/MarinePin';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 
+//new
+mapboxgl.workerClass = require('worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker').default;
+
 function CustomMap({username}) {
 
   const [currentPlaceId, setCurrentPlaceId] = useState(null);
