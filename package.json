@@ -67,6 +67,6 @@
   "devDependencies": {
     "browserify-css": "^0.15.0"
   },
-  "proxy": "https://polar-shelf-82667.herokuapp.com/",
+  "proxy": "https://polar-shelf-82667.herokuapp.com/"
 
 }
