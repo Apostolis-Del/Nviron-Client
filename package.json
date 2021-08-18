@@ -1,0 +1,71 @@
+{
+  "name": "client",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@apollo/client": "^3.3.13",
+    "@apollo/react-hooks": "^4.0.0",
+    "@material-ui/core": "^4.11.4",
+    "@material-ui/icons": "^4.11.2",
+    "@material-ui/lab": "^4.0.0-alpha.58",
+    "@stripe/react-stripe-js": "^1.4.1",
+    "@stripe/stripe-js": "^1.16.0",
+    "@testing-library/jest-dom": "^5.11.10",
+    "@testing-library/react": "^11.2.6",
+    "@testing-library/user-event": "^12.8.3",
+    "antd": "^4.15.1",
+    "apollo-cache-inmemory": "^1.6.6",
+    "apollo-link-context": "^1.0.20",
+    "apollo-link-http": "^1.5.17",
+    "apollo-server-express": "^2.24.0",
+    "apollo-upload-client": "^14.1.3",
+    "axios": "^0.21.1",
+    "cors": "^2.8.5",
+    "graphql": "^15.5.0",
+    "graphql-tag": "^2.11.0",
+    "jwt-decode": "^3.1.2",
+    "leaflet": "^1.7.1",
+    "mapbox-gl": "^2.2.0",
+    "mdb-react-ui-kit": "^1.0.0-beta5",
+    "pure-react-carousel": "^1.27.6",
+    "react": "^17.0.2",
+    "react-alert": "^7.0.3",
+    "react-datetime-picker": "^3.3.0",
+    "react-dom": "^17.0.2",
+    "react-dropzone": "^11.3.2",
+    "react-leaflet": "^3.1.0",
+    "react-map-gl": "^6.1.15",
+    "react-mapbox-gl": "^5.1.1",
+    "react-scripts": "4.0.3",
+    "react-swipeable-views": "^0.13.9",
+    "web-vitals": "^1.1.1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "proxy": "http://localhost:5000/graphql",
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "browserify-css": "^0.15.0"
+  }
+}
