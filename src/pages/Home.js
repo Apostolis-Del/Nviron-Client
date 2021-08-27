@@ -1,6 +1,6 @@
 import React,{useContext , useState} from 'react';
 import { useQuery, gql } from '@apollo/client';
-import { Grid,Transition,Modal,Button,Icon, GridColumn, Header,Image,Container,Segment,Message } from 'semantic-ui-react';
+import { Grid,Transition,Dimmer,Loader,Modal,Button,Icon, GridColumn, Header,Image,Container,Segment,Message } from 'semantic-ui-react';
 import '../App.css';
 import {AuthContext} from '../context/auth';
 import PostCard from '../components/PostCard';
@@ -94,7 +94,13 @@ function Home() {
             <Grid  columns={2} style={{marginTop:20}} divided>
 
             {loadingActs?(
+                <>
                 <h1>Loading Your Actions</h1>
+                <Dimmer active>
+                <Loader />
+                </Dimmer>
+                </>
+
             ):(
                <Transition.Group>
                    {
@@ -231,7 +237,12 @@ function Home() {
             )
             }   
          {loading?(
-             <h1>Loading Users' Posts...</h1>
+             <>
+             <h1>Loading User Posts...</h1>
+             <Dimmer active>
+             <Loader />
+             </Dimmer>
+             </>
          ):(
             <Transition.Group>
                 {
@@ -277,7 +288,12 @@ function Home() {
 
         <Grid.Row>
          {loadingOrgs?(
-             <h1>Loading Organizations's Posts...</h1>
+             <>
+             <h1>Loading Organizations' Posts</h1>
+             <Dimmer active>
+             <Loader />
+             </Dimmer>
+             </>
          ):(
             <Transition.Group>
                 {
