@@ -17,6 +17,7 @@ function SingeOrgPost(props){
     const{user} = useContext(AuthContext);
 
     const commentInputRef=useRef(null);
+    const single=1;
 
     const [comment,setComment] = useState('');
 
@@ -83,7 +84,7 @@ function SingeOrgPost(props){
                                 </Button>
                                 </MyPopup>
                                 {user && user.username===username &&(
-                                    <OrgDeleteButton postId={id} callback={deletePostCallback}/>
+                                    <OrgDeleteButton postId={id} single={single} orgName={orgname} callback={deletePostCallback}/>
                                  )}
                             </Card.Content>
                         </Card>

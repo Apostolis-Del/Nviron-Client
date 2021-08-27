@@ -25,8 +25,11 @@ function AddSocialFaceYou({ facebook, orgname,orgId, youtube }) {
             values.youtubelink=link
             values.orgname=orgname
         }
-          addSocial();
-        
+        addSocial();
+        setTimeout(function() {
+          setOpen(false)
+  
+    }, 1000);        
       }
     const mutation = facebook ? ADD_FACEBBOK : ADD_YOUTUBE;
     const [addSocial] = useMutation(mutation, {
@@ -45,16 +48,16 @@ function AddSocialFaceYou({ facebook, orgname,orgId, youtube }) {
         console.log(result,"TO GAM RESUTLTT");
 
         if(facebook){
-                proxy.writeQuery({
-                query: FETCH_SINGLEORG_QUERY,
-                data: {
-                  getOrganization: result.data.addfacebook.facebookLink,   ...data.getOrganization
-                },
-                variables:{
-                  orgId
-              }
-            }); 
-         }
+          proxy.writeQuery({
+          query: FETCH_SINGLEORG_QUERY,
+          data: {
+              getOrganization: result.data.addFacebook.facebookLink, ...data.getOrganization
+          },
+          variables:{
+            orgId
+        }
+      }); 
+   } 
 
         if(youtube){
                 proxy.writeQuery({

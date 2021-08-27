@@ -2,15 +2,18 @@ import React, { useState } from 'react';
 import gql from 'graphql-tag';
 import { useMutation } from '@apollo/react-hooks';
 import { Button, Confirm, Icon, Popup } from 'semantic-ui-react';
+import { useHistory } from "react-router-dom";
+
 
 import { FETCH_ORGPOSTS_QUERY } from '../../util/graphql';
 import MyPopup from '../../util/MyPopup';
 
-function OrgDeleteButton({ postId, commentId, callback ,orgName}) {
+function OrgDeleteButton({ postId, commentId, callback ,single,orgName}) {
   const [confirmOpen, setConfirmOpen] = useState(false);
 
   const mutation = commentId ? DELETE_ORGCOMMENT_MUTATION : DELETE_ORGPOST_MUTATION;
-  
+  let history = useHistory();
+
   const orgName2=orgName;
   console.log(orgName2)
   const [deletePostOrMutation] = useMutation(mutation, {
@@ -18,12 +21,18 @@ function OrgDeleteButton({ postId, commentId, callback ,orgName}) {
     update(proxy) {
       setConfirmOpen(false);
       if (!commentId) {
+
         const data = proxy.readQuery({
             query: FETCH_SINGLEORGPOST_QUERY,
             variables:{
               orgname:orgName2
             }
           });
+          if(single){
+          history.push('/')
+
+          }
+
           console.log(data,"ta data")
           proxy.writeQuery({
             query: FETCH_SINGLEORGPOST_QUERY,
@@ -35,6 +44,7 @@ function OrgDeleteButton({ postId, commentId, callback ,orgName}) {
               orgname:orgName2
             }
           });
+
       }
       if (callback) callback();
     },

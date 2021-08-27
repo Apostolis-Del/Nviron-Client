@@ -184,41 +184,50 @@ function SingleOrg(props){
                     <li className="sidebarListItem">
                     {facebookLink?(
 
-                        <Button color='facebook' as={Link} to={facebookLink}>
-                            <Icon name='facebook' /> Facebook {facebookLink}
+                        <Button color='facebook' as={Link} to={{pathname:facebookLink}} target="_blank">
+                            <Icon name='facebook' /> Facebook 
                         </Button>
                         ):(
                             <Button color='facebook' >
                             <Icon name='facebook' /> Empty
                         </Button>
                         )}
+                        {user&&(
+                            <div>
                         {user.username===orgOwner.username&&(
 
                         <AddSocialFaceYou facebook orgname={orgName} orgId={id}/>
                         )}
+                        </div>
+                        )}
                         </li>
-                    
-                    <li className="sidebarListItem">
-                    {youtubeLink?(
+
+                        <li className="sidebarListItem">
+                        {youtubeLink?(
                         <Button color='youtube' as={Link} to={{pathname:youtubeLink}} target="_blank">
-                            <Icon name='youtube' /> YouTube {youtubeLink}
+                            <Icon name='youtube' /> YouTube 
                         </Button>
                         ):(
                             <Button color='youtube' >
                             <Icon name='youtube' /> Empty
                         </Button>
                         )}
+                        {user&&(
+                            <div>
                         {user.username===orgOwner.username&&(
+
                         <AddSocialFaceYou youtube orgname={orgName} orgId={id}/>
                         )}
-                         
-                    </li>
-                   
-                    <li className="sidebarListItem">
-                    {twitterLink?(
+                        </div>
+                        )}
+                        
+                        </li>
 
-                        <Button color='twitter' as={Link} to={twitterLink}>
-                                <Icon name='twitter' /> Twitter {twitterLink}
+                        <li className="sidebarListItem">
+                        {twitterLink?(
+
+                        <Button color='twitter' as={Link}   to={{pathname:twitterLink}} target="_blank">
+                                <Icon name='twitter' /> Twitter 
 
                         </Button>
                         ):(
@@ -226,31 +235,39 @@ function SingleOrg(props){
                             <Icon name='twitter' /> Empty
                         </Button>
                         )}
+                        {user&&(
+                            <div>
                         {user.username===orgOwner.username&&(
 
                         <AddSocialInstaTwit twitter orgname={orgName} orgId={id}/>
                         )}
+                        </div>
+                        )}
                         </li>
                                         
-                    
-                    <li className="sidebarListItem" as={Link} to={instagramLink}>
-                    {instagramLink?(
+
+                        <li className="sidebarListItem" as={Link}  to={{pathname:instagramLink}} target="_blank">
+                        {instagramLink?(
                         <Button color='instagram'>
-                                <Icon name='instagram' /> Instagram {instagramLink}
+                                <Icon name='instagram' /> Instagram 
                         </Button>
-                         ):(
+                        ):(
                             <Button color='instagram' >
                             <Icon name='instagram' /> Empty
                         </Button>
                         )}
+                        {user&&(
+                            <div>
                         {user.username===orgOwner.username&&(
 
                         <AddSocialInstaTwit instagram orgname={orgName} orgId={id}/>
                         )}
+                        </div>
+                        )}
                         </li>
-                   
+
+                        </div>
                     </div>
-                </div>
                     </Segment>
                     <Segment>
                     <li className="sidebarListItem">

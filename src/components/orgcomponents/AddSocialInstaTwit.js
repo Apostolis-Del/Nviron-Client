@@ -25,8 +25,12 @@ function AddSocialInstaTwit({ instagram, orgname,orgId, twitter }) {
             values.twitterlink=link
             values.orgname=orgname
         }
-          addSocial();
-        
+        addSocial();
+        setTimeout(function() {
+          setOpen(false)
+  
+    }, 1000);
+    
       }
     const mutation = instagram ? ADD_INSTAGRAM : ADD_TWITTER;
     const [addSocial] = useMutation(mutation, {

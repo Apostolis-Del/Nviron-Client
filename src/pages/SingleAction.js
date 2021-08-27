@@ -64,16 +64,12 @@ function SingleAction(props){
              <div className="profileRight">
                <div className="profileRightTop">
                  <div className="profileCover">
-                   <img
+                 <img
                      className="profileCoverImg"
-                     src="https://i.pinimg.com/originals/3b/8a/d2/3b8ad2c7b1be2caf24321c852103598a.jpg"
+                     src="https://newevolutiondesigns.com/images/freebies/spring-facebook-cover-5.jpg"
                      alt=""
                    />
-                   <img
-                     className="profileUserImg"
-                     src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png"
-                     alt=""
-                   />
+                  
                  </div>
                  <div className="profileInfo">
                      <h2 className="profileInfoName">{actName}</h2>
