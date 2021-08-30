@@ -143,7 +143,7 @@ const handleSubmitSub5 = async (e) => {
     if (result.error) {
       console.log(result.error.message);
     } else {
-      const res = await axios.post('http://localhost:5000/subscription', {'payment_method': result.paymentMethod.id, 'email': email.email});
+      const res = await axios.post('https://polar-shelf-82667.herokuapp.com/subscription', {'payment_method': result.paymentMethod.id, 'email': email.email});
       // eslint-disable-next-line camelcase
       const {client_secret, status} = res.data;
 
@@ -191,7 +191,7 @@ const handleSubmitSub5 = async (e) => {
       if (result.error) {
         console.log(result.error.message);
       } else {
-        const res = await axios.post('http://localhost:5000/subscriptiontwo', {'payment_method': result.paymentMethod.id, 'email': email.email});
+        const res = await axios.post('https://polar-shelf-82667.herokuapp.com/subscriptiontwo', {'payment_method': result.paymentMethod.id, 'email': email.email});
         // eslint-disable-next-line camelcase
         const {client_secret, status} = res.data;
   
