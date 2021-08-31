@@ -66,7 +66,10 @@ function CustomMap({username}) {
       values.endDate=enddate
       //console.log(startdate,enddate,"TO STARTDATE KAI ENDDATE")
     createAct();
-    
+    setTimeout(function() {
+      setOpen(false)
+
+}, 1000);
   }
   //----------------------------------------------------------------------
 

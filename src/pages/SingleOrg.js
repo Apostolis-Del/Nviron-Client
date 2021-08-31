@@ -392,7 +392,7 @@ function SingleOrg(props){
                                                 <ActionCard act={act} />
                                             ))
                                             }
-                            <span className="rightbarFollowingName">John Carter</span>
+                            <span className="rightbarFollowingName"></span>
                         </div>
                         </Segment>
                         </div>

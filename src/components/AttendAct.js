@@ -47,9 +47,9 @@ function AttendAct({ user, act: { id, attendedUsername,attendCount } }) {
       
     </Button>
     <h2 basic color="green" pointing="left">
-      <h3>Other people attending this action:</h3>
+      <h5>Other people attending this action:</h5>
     {attendedUsername && attendedUsername.map(attend=>
-      (<h3>{attend.username}</h3>))}
+      (<h5>{attend.username}</h5>))}
     {attendCount}
   </h2>
   </>

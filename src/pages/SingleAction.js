@@ -88,9 +88,9 @@ function SingleAction(props){
                         </Segment>
                         <Segment>
                             <h4>Start Date:</h4>
-                            <h4>{moment(startDate).format('LLLL')}</h4>
+                            <h5>{moment(startDate).format('LLLL')}</h5>
                             <h4>Start Date:</h4>
-                            <h4>{moment(endDate).format('LLLL')}</h4>
+                            <h5>{moment(endDate).format('LLLL')}</h5>
 
                         </Segment>
                 </div>
@@ -104,7 +104,7 @@ function SingleAction(props){
                                 <Grid.Column width={10}>
                                     <Card fluid>
                                         <Card.Content>
-                                            <Card.Header>{actName}</Card.Header>
+                                            {/* <Card.Header>{actName}</Card.Header> */}
                                             {/* <Card.Meta>{moment(createdAt).fromNow()}</Card.Meta> */}
                                             <Card.Description>{actDescription}</Card.Description>
                                         </Card.Content> 
@@ -189,11 +189,11 @@ function SingleAction(props){
                         <div className="rightbarInfo">
                         <hr className="sidebarHr" />
 
-                        <div className="rightbarInfoItem">
+                        {/* <div className="rightbarInfoItem">
 
                             <h4 className="rightbarInfoKey">Description:</h4>
                             <span className="rightbarInfoValue">{actDescription}</span>
-                        </div>
+                        </div> */}
                         <hr className="sidebarHr" />
 
                         <div className="rightbarInfoItem">
