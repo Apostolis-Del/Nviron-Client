@@ -35,6 +35,7 @@ function CustomMap({username}) {
   const [star, setStar] = useState("Marine Conservation");
   const [startdate, setStartDate] = useState(null);
   const [enddate, setEndDate] = useState(null);
+  const [open, setOpen] = React.useState(false)
 
   const [viewport, setViewport] = useState({
     latitude: 37.983810,
