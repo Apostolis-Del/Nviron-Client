@@ -1,10 +1,11 @@
 import React,{useContext , useState} from 'react';
 import { useQuery, gql } from '@apollo/client';
-import { Grid,Transition,Dimmer,Loader,Modal,Button,Icon, GridColumn, Header,Image,Container,Segment,Message } from 'semantic-ui-react';
+import { Grid,Transition,Modal,Button,Icon, GridColumn, Header,Image,Container,Segment,Message } from 'semantic-ui-react';
 import '../App.css';
 import {AuthContext} from '../context/auth';
 import PostCard from '../components/PostCard';
 import PostForm from '../components/PostForm';
+import moment from 'moment';
 import ActForm from '../components/actcomponents/ActForm';
 import OrgForm from '../components/orgcomponents/OrgForm';
 import OrganizationCard from '../components/orgcomponents/OrganizationCard';
@@ -74,12 +75,11 @@ function Home() {
     </Container>
     <  Container style={{ margin: 20 }}>
         {user&&(
-    <Grid.Row >
-        {/* <header>
-        <h1 >Check your Environmental Actions or Organizations.</h1>
-        </header> */}
-        <Segment style={{marginTop:30,marginBottom:30}}>
-            <Grid columns={2} style={{marginTop:10,marginBottom:10,marginLeft:55,marginRight:20}}  >
+    <Grid.Row className="seven">
+        <h1 style = {{ marginBottom : 20, marginTop:60}}>Check your Environmental Actions or Organizations.</h1>
+
+        <Segment>
+            <Grid columns={2} style={{marginTop:10,marginBottom:10,marginLeft:20,marginRight:20}} divided >
             <Grid.Column style={{marginLeft:0}}>
             
             <Modal
@@ -91,24 +91,24 @@ function Home() {
             >
             <Modal.Header>My Actions.</Modal.Header>
             <Modal.Content>
-            <Grid  columns={2} style={{marginTop:20}} divided>
+            <Grid columns={2} style={{marginTop:20}}divided>
 
             {loadingActs?(
-                <>
                 <h1>Loading Your Actions</h1>
-                <Dimmer active>
-                <Loader />
-                </Dimmer>
-                </>
-
             ):(
                <Transition.Group>
                    {
                         acts && acts.map(act=>(
+                            
                            <Grid.Column key={act.id} style={{marginBottom:20}}>
-                              <ActionCard act={act} username={userName}/>
+                               
+                              <ActionCard act={act}  username={userName}/>
                            </Grid.Column>
-                       ))
+                                                       )
+                            
+                       )
+                       
+                       
                    }
                </Transition.Group>
             )}
@@ -161,19 +161,12 @@ function Home() {
             </Segment>
     </Grid.Row>
     )}
-    
+    <Grid.Row className="seven">
+            <h1 style = {{ marginBottom : 20, marginTop:60}}>Enviromental Actions</h1>
+    </Grid.Row>
 
     {user?(
-        <>
-                <Segment style={{marginTop:20,marginBottom:20}} attached="bottom" >
-
-        <Grid.Row style={{marginTop:20,marginBottom:20}}>
-            <Segment>
-        <header>
-            <h1 style={{marginTop:20,marginBottom:20}}>Enviromental Actions</h1>
-            </header>
-            </Segment>
-    </Grid.Row>
+        <Segment attached="bottom" >
             {/* <Grid columns={2} relaxed='very'> */}
            
             <Segment>
@@ -183,52 +176,28 @@ function Home() {
             </Segment>
            
         </Segment>
-        </>
         ):(
-            <Segment style={{marginTop:20,marginBottom:20}}>
-
-            <Grid.Row style={{marginTop:20,marginBottom:40}}>
-                <Segment>
-                 <header>
-                <h1 style={{marginTop:20,marginBottom:20}}>Enviromental Actions</h1>
-                </header>
-                </Segment>
-        </Grid.Row>
-        <Segment>
+           
                  <CustomMap /> 
-                 </Segment>
-                 </Segment>
             
         )}
 
         </Container>
 
-        
-       <Segment style={{marginTop:30,marginBottom:30}}>
-       <Grid.Row >
-           <Segment>
-            <header>
-            <h1 style={{marginTop:20,marginBottom:20}}>Browse Recent Actions and Organizations Based on Type</h1>
-            </header>
-            </Segment>
+        <Grid.Row className="seven">
+            <h1 style={{marginTop:30,marginBottom:30}}>Browse Recent Actions and Organizations Based on Type</h1>
+
         </Grid.Row>
-        <Segment>
+       <Segment>
         <ActionTabs/> 
         </Segment>
-        </Segment>
-
-            <Segment>
-        <Container>
-            <Segment>
-            <header>
-            <h1 style={{marginTop:20,marginBottom:20}}>Discussion Area</h1>
-            </header>
-            </Segment>
-            <Segment>
 
         <Grid columns={2} style={{marginTop:20}}divided>
-
+        <Grid.Row >
+            <h1 className="seven">Recent Posts</h1>
+        </Grid.Row>
         <Grid.Row>
+            
          {//if user
             user && (
                 <Grid.Column>
@@ -237,12 +206,7 @@ function Home() {
             )
             }   
          {loading?(
-             <>
-             <h1>Loading User Posts...</h1>
-             <Dimmer active>
-             <Loader />
-             </Dimmer>
-             </>
+             <h1>Loading Users' Posts...</h1>
          ):(
             <Transition.Group>
                 {
@@ -255,45 +219,57 @@ function Home() {
             </Transition.Group>
          )}
         </Grid.Row>
+        <Container>
 
-        </Grid>
-        </Segment>
-
-        </Container>
-        </Segment >
-
-        <Grid columns={2} style={{marginTop:20}}divided>
+            
+        <Grid.Row>
 
         {user &&(
-                    <Segment>
-                    <Grid.Row>
-                <header>
+            <>
+            <div className='seven'>
                 <h1 >Subscribed Organizations' Posts</h1>
-                </header>
+                
                 <SubscribedOrgsHelper user={user}/>
-                </Grid.Row>
-                </Segment>
+                </div>
+            </>
         )
         }
-        </Grid>
+        </Grid.Row>
 
-        <Segment style={{marginTop:30,marginBottom:30}}>
-            <Segment>
-            <header>
-                <h1 style={{marginTop:30,marginBottom:30}}>Recent Organizations' Posts</h1>
-                </header>
-                </Segment>
-                <Segment>
-        <Grid columns={2} style={{marginTop:10}}divided>
+        {/* <Segment padded>
+        {//if user
+            user && (
+                <div>
+                    <Transition.Group>
+                    <Segment className="seven">
+                    <h1>Create a new Organization</h1>
+                    </Segment>
+                    
+                    <OrgForm/>
+                    </Transition.Group>
+                </div>
+            )
+            }
+        </Segment> */}
 
+        
+        
+        </Container>
+        
+
+        <>
+            <div className='seven'>
+                <h1 >Recent Organizations' Posts</h1>
+                
+                </div>
+            </>
+        
         <Grid.Row>
+        
+       
+          
          {loadingOrgs?(
-             <>
-             <h1>Loading Organizations' Posts</h1>
-             <Dimmer active>
-             <Loader />
-             </Dimmer>
-             </>
+             <h1>Loading Organizations's Posts...</h1>
          ):(
             <Transition.Group>
                 {
@@ -306,9 +282,9 @@ function Home() {
             </Transition.Group>
          )}
         </Grid.Row>
-        </Grid>
-        </Segment>
-        </Segment>       
+        
+    </Grid>
+    
     </>
     );
 }

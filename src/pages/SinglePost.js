@@ -56,7 +56,8 @@ function SinglePost(props){
                     {profilePic?(
                     <Image src={profilePic} />
                     ):(
-                        <Image src='https://react.semantic-ui.com/images/avatar/large/matthew.png' wrapped ui={false} />
+                        <Image floated='right'
+                        size='large' src='https://react.semantic-ui.com/images/avatar/large/matthew.png'  />
                     )}
                     </Grid.Column>
                     <Grid.Column width={10}>

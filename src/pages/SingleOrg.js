@@ -185,7 +185,7 @@ function SingleOrg(props){
                     {facebookLink?(
 
                         <Button color='facebook' as={Link} to={{pathname:facebookLink}} target="_blank">
-                            <Icon name='facebook' /> Facebook 
+                            <Icon name='facebook' /> Facebook {facebookLink}
                         </Button>
                         ):(
                             <Button color='facebook' >
@@ -201,11 +201,11 @@ function SingleOrg(props){
                         </div>
                         )}
                         </li>
-
-                        <li className="sidebarListItem">
-                        {youtubeLink?(
+                    
+                    <li className="sidebarListItem">
+                    {youtubeLink?(
                         <Button color='youtube' as={Link} to={{pathname:youtubeLink}} target="_blank">
-                            <Icon name='youtube' /> YouTube 
+                            <Icon name='youtube' /> YouTube {youtubeLink}
                         </Button>
                         ):(
                             <Button color='youtube' >
@@ -220,14 +220,14 @@ function SingleOrg(props){
                         )}
                         </div>
                         )}
-                        
-                        </li>
-
-                        <li className="sidebarListItem">
-                        {twitterLink?(
+                         
+                    </li>
+                   
+                    <li className="sidebarListItem">
+                    {twitterLink?(
 
                         <Button color='twitter' as={Link}   to={{pathname:twitterLink}} target="_blank">
-                                <Icon name='twitter' /> Twitter 
+                                <Icon name='twitter' /> Twitter {twitterLink}
 
                         </Button>
                         ):(
@@ -245,13 +245,13 @@ function SingleOrg(props){
                         )}
                         </li>
                                         
-
-                        <li className="sidebarListItem" as={Link}  to={{pathname:instagramLink}} target="_blank">
-                        {instagramLink?(
+                    
+                    <li className="sidebarListItem" as={Link}  to={{pathname:instagramLink}} target="_blank">
+                    {instagramLink?(
                         <Button color='instagram'>
-                                <Icon name='instagram' /> Instagram 
+                                <Icon name='instagram' /> Instagram {instagramLink}
                         </Button>
-                        ):(
+                         ):(
                             <Button color='instagram' >
                             <Icon name='instagram' /> Empty
                         </Button>
@@ -265,9 +265,9 @@ function SingleOrg(props){
                         </div>
                         )}
                         </li>
-
-                        </div>
+                   
                     </div>
+                </div>
                     </Segment>
                     <Segment>
                     <li className="sidebarListItem">

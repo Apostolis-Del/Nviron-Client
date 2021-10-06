@@ -1,7 +1,7 @@
 import React,{useContext,useState,useRef} from 'react';
 import gql from 'graphql-tag';
 import {useQuery,useMutation} from '@apollo/react-hooks';
-import { Button,Icon,Label,Image, Segment,Card, Grid,Form } from 'semantic-ui-react';
+import { Button,Icon,Header,Label,Image, Segment,Card, Grid,Form } from 'semantic-ui-react';
 import ActLikeButton from '../components/actcomponents/ActLikeButton';
 import moment from 'moment';
 import {AuthContext} from '../context/auth';
@@ -64,7 +64,7 @@ function SingleAction(props){
              <div className="profileRight">
                <div className="profileRightTop">
                  <div className="profileCover">
-                 <img
+                   <img
                      className="profileCoverImg"
                      src="https://newevolutiondesigns.com/images/freebies/spring-facebook-cover-5.jpg"
                      alt=""
@@ -72,8 +72,27 @@ function SingleAction(props){
                   
                  </div>
                  <div className="profileInfo">
+                        {moment().isBefore(moment(endDate))&&(
+                            <Header style={{marginTop:-50}} as='h2'>
+                            <Icon.Group size='large'>
+                            <Icon name='calendar check' />
+                            </Icon.Group>
+                            Ongoing Action
+                        </Header>
+                        )
+                        }
+                        {moment().isAfter(moment(endDate))&&(
+                            <Header style={{marginTop:-50}} as='h2'>
+                            <Icon.Group size='large'>
+                            <Icon name='calendar times' />
+                            </Icon.Group>
+                            Past Action
+                        </Header>
+                        )
+                        }
                      <h2 className="profileInfoName">{actName}</h2>
-                     {/* <span className="profileInfoDesc">{orgDescription}</span> */}
+
+                     
                  </div>
                </div>
                <div className="profileRightBottom">
@@ -88,9 +107,9 @@ function SingleAction(props){
                         </Segment>
                         <Segment>
                             <h4>Start Date:</h4>
-                            <h5>{moment(startDate).format('LLLL')}</h5>
+                            <h4>{moment(startDate).format('LLLL')}</h4>
                             <h4>Start Date:</h4>
-                            <h5>{moment(endDate).format('LLLL')}</h5>
+                            <h4>{moment(endDate).format('LLLL')}</h4>
 
                         </Segment>
                 </div>
@@ -104,7 +123,7 @@ function SingleAction(props){
                                 <Grid.Column width={10}>
                                     <Card fluid>
                                         <Card.Content>
-                                            {/* <Card.Header>{actName}</Card.Header> */}
+                                            <Card.Header>{actName}</Card.Header>
                                             {/* <Card.Meta>{moment(createdAt).fromNow()}</Card.Meta> */}
                                             <Card.Description>{actDescription}</Card.Description>
                                         </Card.Content> 
@@ -189,11 +208,11 @@ function SingleAction(props){
                         <div className="rightbarInfo">
                         <hr className="sidebarHr" />
 
-                        {/* <div className="rightbarInfoItem">
+                        <div className="rightbarInfoItem">
 
                             <h4 className="rightbarInfoKey">Description:</h4>
                             <span className="rightbarInfoValue">{actDescription}</span>
-                        </div> */}
+                        </div>
                         <hr className="sidebarHr" />
 
                         <div className="rightbarInfoItem">

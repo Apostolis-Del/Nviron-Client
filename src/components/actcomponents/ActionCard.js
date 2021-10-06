@@ -1,5 +1,5 @@
 import React,{useContext} from 'react';
-import {Card,Icon,Label,Image,Button,Popup} from 'semantic-ui-react';
+import {Card,Icon,Label,Image,Button,Header,Popup} from 'semantic-ui-react';
 import moment from 'moment';
 import {Link} from 'react-router-dom';
 import {AuthContext} from '../../context/auth';
@@ -7,7 +7,7 @@ import ActLikeButton from './ActLikeButton';
 import DeleteAct from './DeleteAct';
 import MyPopup from '../../util/MyPopup';
 
-function ActionCard({act:{id,actName,actDescription,actLocationLat,actLocationLong,actType,likes,likeCount,commentCount,actOwner},username}){
+function ActionCard({act:{id,actName,actDescription,actLocationLat,actLocationLong,actType,startDate,endDate,likes,likeCount,commentCount,actOwner},username}){
 
     //kanoume extract ton user
     const {user} = useContext(AuthContext);
@@ -29,11 +29,28 @@ function ActionCard({act:{id,actName,actDescription,actLocationLat,actLocationLo
                 <Image
                 floated='right'
                 size='mini'
-                src='https://www.pngall.com/wp-content/uploads/2016/06/Environment-Download-PNG.png'
+                src='https://react.semantic-ui.com/images/avatar/large/jenny.jpg'
                 />
-                <Card.Header>{actName}</Card.Header>
-                {//EDW PREPEI NA MPEI LINK STO ACTS/:ID
+                <Card.Header>
+                {moment().isBefore(moment(endDate))&&(
+                    <Header style={{marginBottom:5}} as='h5'>
+                    <Icon.Group size='small'>
+                    <Icon name='calendar check' />
+                    </Icon.Group>
+                    Ongoing Action
+                </Header>
+                )
                 }
+                {moment().isAfter(moment(endDate))&&(
+                    <Header style={{marginBottom:5}} as='h5'>
+                    <Icon.Group size='small'>
+                    <Icon name='calendar times' />
+                    </Icon.Group>
+                    Past Action
+                </Header>
+                )
+                }{actName}</Card.Header>
+                
                 { <Card.Meta as={Link} to={`/actions/${id}`}></Card.Meta> }
                 <Card.Description>
                     {actDescription}    

@@ -2,54 +2,60 @@ import React, { useState } from 'react';
 import gql from 'graphql-tag';
 import { useMutation } from '@apollo/react-hooks';
 import { Button, Confirm, Icon, Popup } from 'semantic-ui-react';
+import { useHistory } from "react-router-dom";
 
-import { FETCH_ORGANIZATIONS_QUERY } from '../../util/graphql';
+
+import { FETCH_ORGPOSTS_QUERY } from '../../util/graphql';
 import MyPopup from '../../util/MyPopup';
 
-function OrgDeleteButton({ orgId, callback ,username}) {
+function OrgDeleteButton({ postId, commentId, callback ,single,orgName}) {
   const [confirmOpen, setConfirmOpen] = useState(false);
 
-  const mutation = DELETE_ORG_MUTATION;
-  console.log(username,"username sto delete org")
-  const [deleteOrg] = useMutation(mutation, {
+  const mutation = commentId ? DELETE_ORGCOMMENT_MUTATION : DELETE_ORGPOST_MUTATION;
+  let history = useHistory();
+
+  const orgName2=orgName;
+  console.log(orgName2)
+  const [deletePostOrMutation] = useMutation(mutation, {
     //otan mpei sto update simainei oti to post exei diagraftei epityxws
     update(proxy) {
       setConfirmOpen(false);
-      if (orgId) {
+      if (!commentId) {
+
         const data = proxy.readQuery({
-            query: FETCH_ORGANIZATIONS_QUERY,
+            query: FETCH_SINGLEORGPOST_QUERY,
+            variables:{
+              orgname:orgName2
+            }
           });
+          if(single){
+          history.push('/')
+
+          }
+
+          console.log(data,"ta data")
           proxy.writeQuery({
-            query: FETCH_ORGANIZATIONS_QUERY,
+            query: FETCH_SINGLEORGPOST_QUERY,
             data: {
-              getOrganizations: data.getOrganizations.filter(p => p.id !== orgId)
+              //getOrgPostsByName: data.getOrgPostsbyName.filter(p => p.id !== postId)
+              getOrgPostsByName: data.getOrgPostsByName.filter(p => p.id !== postId)
+            },
+            variables:{
+              orgname:orgName2
             }
           });
 
-          const data2 = proxy.readQuery({
-            query: FETCH_ORGANIZATIONS_OWNER_QUERY,
-            variables: { orgOwner:username },
-          });
-          console.log(data2,"TA DATA2")
-          //console.log(data,"to data")
-    
-          proxy.writeQuery({
-            query: FETCH_ORGANIZATIONS_OWNER_QUERY,
-            variables: { orgOwner:username },
-            data: {
-              getOrganizationsbyOwner: data2.getOrganizationsbyOwner.filter(p => p.id !== orgId)
-            }
-        })
       }
       if (callback) callback();
     },
     variables: {
-      orgId
+      postId,
+      commentId
     }
   });
   return (
     <>
-      <MyPopup content={'Delete Organization'}>
+      <MyPopup content={commentId ? 'Delete comment' : 'Delete post'}>
         <Button
           as="div"
           color="red"
@@ -62,36 +68,49 @@ function OrgDeleteButton({ orgId, callback ,username}) {
       <Confirm
         open={confirmOpen}
         onCancel={() => setConfirmOpen(false)}
-        onConfirm={deleteOrg}
+        onConfirm={deletePostOrMutation}
       />
     </>
   );
 }
 
-const DELETE_ORG_MUTATION = gql`
-  mutation deleteOrg($orgId: ID!) {
-    deleteOrg(orgId: $orgId)
+const DELETE_ORGPOST_MUTATION = gql`
+  mutation deleteOrgPost($postId: ID!) {
+    deleteOrgPost(postId: $postId)
   }
-`;
-const FETCH_ORGANIZATIONS_OWNER_QUERY = gql`
-query($orgOwner:String!){  
-getOrganizationsbyOwner(orgOwner:$orgOwner){
-    id
-        orgName
-        orgDescription
-  orgLocationLat
-  orgLocationLong
-  orgType
-  orgOwner{
-  username id 
-  }
-  donations{
-    username
-    donateDate
-  }
-  profilePic
-}
-}
 `;
 
+const DELETE_ORGCOMMENT_MUTATION = gql`
+  mutation deleteOrgComment($postId: ID!, $commentId: ID!) {
+    deleteOrgComment(postId: $postId, commentId: $commentId) {
+      id
+      comments {
+        id
+        username
+        createdAt
+        body
+      }
+      commentCount
+    }
+  }
+`;
+
+const FETCH_SINGLEORGPOST_QUERY= gql`
+    query($orgname:String!){
+        getOrgPostsByName(orgname:$orgname){
+            id
+            body
+            username
+            createdAt
+            comments{
+                id username
+            }
+            likes{
+                username
+            }
+            likeCount
+            commentCount
+        }
+    }
+`;
 export default OrgDeleteButton;

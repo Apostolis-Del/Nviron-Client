@@ -17,10 +17,9 @@ function SingeOrgPost(props){
     const{user} = useContext(AuthContext);
 
     const commentInputRef=useRef(null);
-    const single=1;
 
     const [comment,setComment] = useState('');
-
+    const single=1;
     //epeidi theloume to field tou getPost dinoume sto data to alias getPost, to name getPost diladi
     const {data:{getOrgPost}={}} = useQuery(FETCH_ORGPOST_QUERY,{
         variables:{

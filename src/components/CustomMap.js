@@ -6,7 +6,7 @@ import gql from 'graphql-tag';
 import {AuthContext} from '../context/auth';
 import {Link} from 'react-router-dom';
 import { useForm } from '../util/hooks';
-import {Icon,Image,Label,Card,Dimmer,Loader,Button,Form} from 'semantic-ui-react';
+import {Icon,Image,Label,Card,Header,Button,Form} from 'semantic-ui-react';
 import ReactMapGL, { Marker, Popup } from "react-map-gl";
 import {FETCH_ACTIONS_QUERY} from '../util/graphql';
 import {MAP_BOX} from '../mapconfig';
@@ -19,15 +19,17 @@ import AgriculturePin from './pins/AgriculturePin';
 import AnimalPin from './pins/AnimalPin';
 import MarinePin from './pins/MarinePin';
 
+import PastNaturePin from './pins/PastNaturePin';
+import PastEnergyPin from './pins/PastEnergyPin';
+import PastAgriculturePin from './pins/PastAgriculturePin';
+import PastAnimalPin from './pins/PastAnimalPin';
+import PastMarinePin from './pins/PastMarinePin';
+
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 
-//new
-
 function CustomMap({username}) {
 
-  // mapboxgl.workerClass = require('worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker').default;
-  // npm install @craco/craco --save
   const [currentPlaceId, setCurrentPlaceId] = useState(null);
   const [newPlace, setNewPlace] = useState(null);
   const [title, setTitle] = useState(null);
@@ -35,7 +37,8 @@ function CustomMap({username}) {
   const [star, setStar] = useState("Marine Conservation");
   const [startdate, setStartDate] = useState(null);
   const [enddate, setEndDate] = useState(null);
-  const [open, setOpen] = React.useState(false)
+  const [showPopup, togglePopup] = React.useState(true);
+  const [showPopupMarker, togglePopupMarker] = React.useState(true);
 
   const [viewport, setViewport] = useState({
     latitude: 37.983810,
@@ -68,7 +71,7 @@ function CustomMap({username}) {
       //console.log(startdate,enddate,"TO STARTDATE KAI ENDDATE")
     createAct();
     setTimeout(function() {
-      setOpen(false)
+      togglePopup(false)
 
 }, 1000);
   }
@@ -151,12 +154,7 @@ function CustomMap({username}) {
   let size = 40;
 
   if(!acts){
-    postMarkup=<>
-    <h1>Loading Map</h1>
-    <Dimmer active>
-    <Loader />
-    </Dimmer>
-    </>
+    postMarkup=<p>Loading!!!!</p>
   }else{
     postMarkup=(
 
@@ -184,7 +182,7 @@ function CustomMap({username}) {
               
             >
                 
-               {(act.actType === "Energy Conservation")&&(
+               {(act.actType === "Energy Conservation")&&(moment().isBefore(moment(act.endDate)))&&(
                 
                 <EnergyPin size={20}  
               onClick={() => handleMarkerClick(act.id, act.actLocationLat, act.actLocationLong)}
@@ -192,7 +190,7 @@ function CustomMap({username}) {
                
               )}
                
-               {(act.actType === "Nature Conservation")&&(
+               {(act.actType === "Nature Conservation")&&(moment().isBefore(moment(act.endDate)))&&(
                
                 <NaturePin size={20}  
               onClick={() => handleMarkerClick(act.id, act.actLocationLat, act.actLocationLong)}
@@ -202,7 +200,7 @@ function CustomMap({username}) {
 
              
 
-                 {(act.actType=== "Marine Conservation" )&&(
+                 {(act.actType=== "Marine Conservation" )&&(moment().isBefore(moment(act.endDate)))&&(
 
                 
                   <MarinePin size={20}  
@@ -211,7 +209,7 @@ function CustomMap({username}) {
                   )
                   } 
 
-                   {(act.actType=== "Agriculture" )&&(
+                   {(act.actType=== "Agriculture" )&&(moment().isBefore(moment(act.endDate)))&&(
 
                                 
                   <AgriculturePin size={20}  
@@ -219,13 +217,57 @@ function CustomMap({username}) {
                     /> 
                   )}
 
-                   {(act.actType === "Animal Conservation")&&(
+                   {(act.actType === "Animal Conservation")&&(moment().isBefore(moment(act.endDate)))&&(
                                 
                                 <AnimalPin size={20}  
                               onClick={() => handleMarkerClick(act.id, act.actLocationLat, act.actLocationLong)}
                                   /> 
                                 
                     )}  
+
+
+          {(act.actType === "Energy Conservation")&&(moment().isAfter(moment(act.endDate)))&&(
+                
+                <PastEnergyPin size={20}  
+              onClick={() => handleMarkerClick(act.id, act.actLocationLat, act.actLocationLong)}
+                  /> 
+               
+              )}
+               
+               {(act.actType === "Nature Conservation")&&(moment().isAfter(moment(act.endDate)))&&(
+               
+                <PastNaturePin size={20}  
+              onClick={() => handleMarkerClick(act.id, act.actLocationLat, act.actLocationLong)}
+                  /> 
+               
+              )}
+
+             
+
+                 {(act.actType=== "Marine Conservation" )&&(moment().isAfter(moment(act.endDate)))&&(
+
+                
+                  <PastMarinePin size={20}  
+                  onClick={() => handleMarkerClick(act.id, act.actLocationLat, act.actLocationLong)}
+                      /> 
+                  )
+                  } 
+
+                   {(act.actType=== "Agriculture" )&&(moment().isAfter(moment(act.endDate)))&&(
+
+                                
+                  <PastAgriculturePin size={20}  
+                  onClick={() => handleMarkerClick(act.id, act.actLocationLat, act.actLocationLong)}
+                    /> 
+                  )}
+
+                   {(act.actType === "Animal Conservation")&&(moment().isAfter(moment(act.endDate)))&&(
+                                
+                                <PastAnimalPin size={20}  
+                              onClick={() => handleMarkerClick(act.id, act.actLocationLat, act.actLocationLong)}
+                                  /> 
+                                
+                    )} 
 
             {/* <Icon name="tree" 
                 style={{
@@ -246,9 +288,30 @@ function CustomMap({username}) {
                 onClose={() => setCurrentPlaceId(null)}
                 anchor="left"
               >
+                
+               
+
                 <Card>
                 <Card.Content>
                     <Card.Header content={act.actName} />
+                    {moment().isBefore(moment(act.endDate))&&(
+                    <Header style={{marginTop:2}} as='h5'>
+                    <Icon.Group size='small'>
+                    <Icon name='calendar check' />
+                    </Icon.Group>
+                    Ongoing Action
+                </Header>
+                )
+                }
+                {moment().isAfter(moment(act.endDate))&&(
+                    <Header style={{marginTop:2}} as='h5'>
+                    <Icon.Group size='small'>
+                    <Icon name='calendar times' />
+                    </Icon.Group>
+                    Past Action
+                </Header>
+                )
+                }
                     <Card.Meta content={moment(act.startDate).format("MMM Do YY")} />
                     <Card.Description content={act.actDescription} />
                   </Card.Content>
@@ -261,11 +324,13 @@ function CustomMap({username}) {
         ))}
         {newPlace && (
           <>
-            <Marker
+            {/* {showPopupMarker &&<Marker
               latitude={newPlace.lat}
               longitude={newPlace.long}
               offsetLeft={-3.5 * viewport.zoom}
               offsetTop={-7 * viewport.zoom}
+              onClose={() => togglePopupMarker(false)}
+
             >
               <Room
                 style={{
@@ -274,12 +339,14 @@ function CustomMap({username}) {
                   cursor: "pointer",
                 }}
               />
-            </Marker>
-            <Popup
+            </Marker>} */}
+
+        {showPopup &&<Popup
               latitude={newPlace.lat}
               longitude={newPlace.long}
               closeButton={true}
-              
+              onClose={() => togglePopup(false)}
+
               closeOnClick={false}
               onClose={() => setNewPlace(null)}
               anchor="left"
@@ -346,7 +413,7 @@ function CustomMap({username}) {
                   </button>
                 </Form>
               </div>
-            </Popup>
+            </Popup>}
           </>
         )}
       </ReactMapGL>
