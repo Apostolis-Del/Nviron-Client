@@ -352,4 +352,6 @@ const FETCH_ACTIONS_OWNER_QUERY = gql`
             startDate
             endDate
          }
-   }`
+   }
+   `
+   export default Home;
