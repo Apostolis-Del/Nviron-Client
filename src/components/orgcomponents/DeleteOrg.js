@@ -1,4 +1,5 @@
 import gql from 'graphql-tag';
+import {useState} from 'react';
 import { useMutation } from '@apollo/react-hooks';
 import { Button, Confirm, Icon, Popup } from 'semantic-ui-react';
 
@@ -7,7 +8,6 @@ import { FETCH_ORGANIZATIONS_QUERY } from '../../util/graphql';
 import MyPopup from '../../util/MyPopup';
 
 function OrgDeleteButton({ orgId, callback ,username}) {
-
   const [confirmOpen, setConfirmOpen] = useState(false);
 
   const mutation = DELETE_ORG_MUTATION;
@@ -17,28 +17,35 @@ function OrgDeleteButton({ orgId, callback ,username}) {
     //otan mpei sto update simainei oti to post exei diagraftei epityxws
     update(proxy) {
       setConfirmOpen(false);
-      if (!commentId) {
-
+      if (orgId) {
         const data = proxy.readQuery({
-           
-            query: FETCH_SINGLEORGPOST_QUERY,
-            variables:{
-              orgname:orgName2
+            query: FETCH_ORGANIZATIONS_QUERY,
+          });
+          proxy.writeQuery({
+            query: FETCH_ORGANIZATIONS_QUERY,
+            data: {
+              getOrganizations: data.getOrganizations.filter(p => p.id !== orgId)
             }
           });
-          
+         
 
-          
+          const data2 = proxy.readQuery({
+            query: FETCH_ORGANIZATIONS_OWNER_QUERY,
+            variables: { orgOwner:username },
+          });
+          console.log(data2,"TA DATA2")
+          //console.log(data,"to data")
+
           
 
           proxy.writeQuery({
-           
-            query: FETCH_SINGLEORGPOST_QUERY,
+            query: FETCH_ORGANIZATIONS_OWNER_QUERY,
+            variables: { orgOwner:username },
             data: {
-              //getOrgPostsByName: data.getOrgPostsbyName.filter(p => p.id !== postId)
-              getOrgPostsByName: data.getOrgPostsByName.filter(p => p.id !== postId)
+              getOrganizationsbyOwner: data2.getOrganizationsbyOwner.filter(p => p.id !== orgId)
             }
         })
+          
 
       }
       if (callback) callback();
@@ -73,7 +80,9 @@ const DELETE_ORG_MUTATION = gql`
   mutation deleteOrg($orgId: ID!) {
     deleteOrg(orgId: $orgId)
 
+  }
 `;
+
 const FETCH_ORGANIZATIONS_OWNER_QUERY = gql`
 query($orgOwner:String!){  
 getOrganizationsbyOwner(orgOwner:$orgOwner){
@@ -97,5 +106,22 @@ getOrganizationsbyOwner(orgOwner:$orgOwner){
 }
 `;
 
-
-export default OrgDeleteButton; 
+const FETCH_SINGLEORGPOST_QUERY= gql`
+    query($orgname:String!){
+        getOrgPostsByName(orgname:$orgname){
+            id
+            body
+            username
+            createdAt
+            comments{
+                id username
+            }
+            likes{
+                username
+            }
+            likeCount
+            commentCount
+        }
+    }
+`;
+export default OrgDeleteButton;
