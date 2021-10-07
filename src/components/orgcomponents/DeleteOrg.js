@@ -1,61 +1,56 @@
-import React, { useState } from 'react';
 import gql from 'graphql-tag';
 import { useMutation } from '@apollo/react-hooks';
 import { Button, Confirm, Icon, Popup } from 'semantic-ui-react';
-import { useHistory } from "react-router-dom";
 
+import { FETCH_ORGANIZATIONS_QUERY } from '../../util/graphql';
 
-import { FETCH_ORGPOSTS_QUERY } from '../../util/graphql';
 import MyPopup from '../../util/MyPopup';
 
-function OrgDeleteButton({ postId, commentId, callback ,single,orgName}) {
+function OrgDeleteButton({ orgId, callback ,username}) {
+
   const [confirmOpen, setConfirmOpen] = useState(false);
 
-  const mutation = commentId ? DELETE_ORGCOMMENT_MUTATION : DELETE_ORGPOST_MUTATION;
-  let history = useHistory();
-
-  const orgName2=orgName;
-  console.log(orgName2)
-  const [deletePostOrMutation] = useMutation(mutation, {
+  const mutation = DELETE_ORG_MUTATION;
+  console.log(username,"username sto delete org")
+  const [deleteOrg] = useMutation(mutation, {
+  
     //otan mpei sto update simainei oti to post exei diagraftei epityxws
     update(proxy) {
       setConfirmOpen(false);
       if (!commentId) {
 
         const data = proxy.readQuery({
+           
             query: FETCH_SINGLEORGPOST_QUERY,
             variables:{
               orgname:orgName2
             }
           });
-          if(single){
-          history.push('/')
+          
 
-          }
+          
+          
 
-          console.log(data,"ta data")
           proxy.writeQuery({
+           
             query: FETCH_SINGLEORGPOST_QUERY,
             data: {
               //getOrgPostsByName: data.getOrgPostsbyName.filter(p => p.id !== postId)
               getOrgPostsByName: data.getOrgPostsByName.filter(p => p.id !== postId)
-            },
-            variables:{
-              orgname:orgName2
             }
-          });
+        })
 
       }
       if (callback) callback();
     },
     variables: {
-      postId,
-      commentId
+      orgId
+     
     }
   });
   return (
     <>
-      <MyPopup content={commentId ? 'Delete comment' : 'Delete post'}>
+      <MyPopup content={'Delete Organization'}>
         <Button
           as="div"
           color="red"
@@ -68,49 +63,39 @@ function OrgDeleteButton({ postId, commentId, callback ,single,orgName}) {
       <Confirm
         open={confirmOpen}
         onCancel={() => setConfirmOpen(false)}
-        onConfirm={deletePostOrMutation}
+        onConfirm={deleteOrg}
       />
     </>
   );
 }
 
-const DELETE_ORGPOST_MUTATION = gql`
-  mutation deleteOrgPost($postId: ID!) {
-    deleteOrgPost(postId: $postId)
+const DELETE_ORG_MUTATION = gql`
+  mutation deleteOrg($orgId: ID!) {
+    deleteOrg(orgId: $orgId)
+
+`;
+const FETCH_ORGANIZATIONS_OWNER_QUERY = gql`
+query($orgOwner:String!){  
+getOrganizationsbyOwner(orgOwner:$orgOwner){
+    id
+        orgName
+        orgDescription
+  orgLocationLat
+  orgLocationLong
+  orgType
+  orgOwner{
+  username id 
   }
+  donations{
+    username
+    donateDate
+
+
+  }
+  profilePic
+}
+}
 `;
 
-const DELETE_ORGCOMMENT_MUTATION = gql`
-  mutation deleteOrgComment($postId: ID!, $commentId: ID!) {
-    deleteOrgComment(postId: $postId, commentId: $commentId) {
-      id
-      comments {
-        id
-        username
-        createdAt
-        body
-      }
-      commentCount
-    }
-  }
-`;
 
-const FETCH_SINGLEORGPOST_QUERY= gql`
-    query($orgname:String!){
-        getOrgPostsByName(orgname:$orgname){
-            id
-            body
-            username
-            createdAt
-            comments{
-                id username
-            }
-            likes{
-                username
-            }
-            likeCount
-            commentCount
-        }
-    }
-`;
-export default OrgDeleteButton;
+export default OrgDeleteButton; 

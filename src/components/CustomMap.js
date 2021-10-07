@@ -6,7 +6,7 @@ import gql from 'graphql-tag';
 import {AuthContext} from '../context/auth';
 import {Link} from 'react-router-dom';
 import { useForm } from '../util/hooks';
-import {Icon,Image,Label,Card,Header,Button,Form} from 'semantic-ui-react';
+import {Icon,Image,Label,Card,Dimmer,Loader,Button,Form} from 'semantic-ui-react';
 import ReactMapGL, { Marker, Popup } from "react-map-gl";
 import {FETCH_ACTIONS_QUERY} from '../util/graphql';
 import {MAP_BOX} from '../mapconfig';
@@ -154,7 +154,12 @@ function CustomMap({username}) {
   let size = 40;
 
   if(!acts){
-    postMarkup=<p>Loading!!!!</p>
+    postMarkup=<>
+    <h1>Loading Map</h1>
+    <Dimmer active>
+    <Loader />
+    </Dimmer>
+    </>
   }else{
     postMarkup=(
 

@@ -1,6 +1,6 @@
 import React,{useContext , useState} from 'react';
 import { useQuery, gql } from '@apollo/client';
-import { Grid,Transition,Modal,Button,Icon, GridColumn, Header,Image,Container,Segment,Message } from 'semantic-ui-react';
+import { Grid,Transition,Dimmer,Loader,Modal,Button,Icon, GridColumn, Header,Image,Container,Segment,Message } from 'semantic-ui-react';
 import '../App.css';
 import {AuthContext} from '../context/auth';
 import PostCard from '../components/PostCard';
@@ -32,41 +32,34 @@ function Home() {
     //FOR POSTS
     const { loading, data } = useQuery(FETCH_POSTS_QUERY);
     const { getPosts: posts } = data ? data : [];
-
     //FOR ORGANIZATIONS
     const{loadingOrgs,data: dataOrgs } =useQuery(FETCH_ORGANIZATIONS_QUERY);
     const{ getOrganizations: orgs} = dataOrgs? dataOrgs:[];
-
     //FOR ORGPOSTS
     const{loadingOrgPosts,data: dataOrgPosts } =useQuery(FETCH_ORGPOSTS_QUERY);
     const{ getOrgPosts: orgposts} = dataOrgPosts? dataOrgPosts:[];
-
-
     console.log(userName,"to username")
     //FOR ACTIONS
     const{loadingActs,data: dataActs} =useQuery(FETCH_ACTIONS_OWNER_QUERY, {
         variables: { username:userName },
       });
     const{ getActionbyOwner: acts} = dataActs? dataActs:[];
-
     //FOR ORGANIZATION OWNER
    
-
     if(data){
         console.log(data);
     }
     if(dataOrgs){
         console.log(dataOrgs);
     }
-
     if(!loadingActs){
         console.log(acts,"ta acts tou owner");
     }
    
 	return (
+        
         <>
-
-    <  Container style={{ margin: 20 }}>
+    <Container style={{ margin: 20 }}>
         {!user&&
       <Segment attached="bottom" >
         <ImageCarousel />
@@ -75,13 +68,15 @@ function Home() {
     </Container>
     <  Container style={{ margin: 20 }}>
         {user&&(
-    <Grid.Row className="seven">
-        <h1 style = {{ marginBottom : 20, marginTop:60}}>Check your Environmental Actions or Organizations.</h1>
-
-        <Segment>
-            <Grid columns={2} style={{marginTop:10,marginBottom:10,marginLeft:20,marginRight:20}} divided >
+    <Grid.Row >
+        {/* <header>
+        <h1 >Check your Environmental Actions or Organizations.</h1>
+        </header> */}
+        <Segment style={{marginTop:30,marginBottom:30}}>
+            <Grid columns={2} style={{marginTop:10,marginBottom:10,marginLeft:55,marginRight:20}}  >
+   
             <Grid.Column style={{marginLeft:0}}>
-            
+
             <Modal
             trigger={<Button size='big'color='green' icon labelPosition='left'>
             <Icon name='tree' />My Actions</Button>}
@@ -91,28 +86,36 @@ function Home() {
             >
             <Modal.Header>My Actions.</Modal.Header>
             <Modal.Content>
-            <Grid columns={2} style={{marginTop:20}}divided>
+            <Grid  columns={2} style={{marginTop:20}} divided>
 
             {loadingActs?(
+                <>
                 <h1>Loading Your Actions</h1>
+                <Dimmer active>
+                <Loader />
+                </Dimmer>
+                </>
+
             ):(
                <Transition.Group>
                    {
                         acts && acts.map(act=>(
-                            
+
                            <Grid.Column key={act.id} style={{marginBottom:20}}>
-                               
+                              <ActionCard act={act} username={userName}/>
+
                               <ActionCard act={act}  username={userName}/>
                            </Grid.Column>
-                                                       )
-                            
-                       )
+                       ))
+                                                       
+
                        
-                       
+
+
                    }
                </Transition.Group>
             )}
-            </Grid>
+        </Grid>
             </Modal.Content>
             </Modal>
             <MyOrganizations userName={userName}/>
@@ -143,7 +146,6 @@ function Home() {
                 />
             </Modal.Actions>
             </Modal> */}
-
             <Modal
             trigger={<Button size='big' color='green' icon labelPosition='left'>
             <Icon name='tree' />New Action</Button>}
@@ -161,43 +163,81 @@ function Home() {
             </Segment>
     </Grid.Row>
     )}
-    <Grid.Row className="seven">
-            <h1 style = {{ marginBottom : 20, marginTop:60}}>Enviromental Actions</h1>
-    </Grid.Row>
+
+    
+
+
 
     {user?(
-        <Segment attached="bottom" >
+        <>
+                <Segment style={{marginTop:20,marginBottom:20}} attached="bottom" >
+
+        <Grid.Row style={{marginTop:20,marginBottom:20}}>
+            <Segment>
+        <header>
+            <h1 style={{marginTop:20,marginBottom:20}}>Enviromental Actions</h1>
+            </header>
+            </Segment>
+    </Grid.Row>
             {/* <Grid columns={2} relaxed='very'> */}
-           
+
             <Segment>
             <div>
                     <CustomMap username={userName}/>
             </div>
             </Segment>
-           
+
         </Segment>
+        </>
         ):(
-           
+            <Segment style={{marginTop:20,marginBottom:20}}>
+
+            <Grid.Row style={{marginTop:20,marginBottom:40}}>
+                <Segment>
+                 <header>
+                <h1 style={{marginTop:20,marginBottom:20}}>Enviromental Actions</h1>
+                </header>
+                </Segment>
+        </Grid.Row>
+        <Segment>
+
                  <CustomMap /> 
-            
+                 </Segment>
+                 </Segment>
+
+
         )}
 
         </Container>
 
-        <Grid.Row className="seven">
-            <h1 style={{marginTop:30,marginBottom:30}}>Browse Recent Actions and Organizations Based on Type</h1>
 
+       <Segment style={{marginTop:30,marginBottom:30}}>
+       <Grid.Row >
+           <Segment>
+            <header>
+            <h1 style={{marginTop:20,marginBottom:20}}>Browse Recent Actions and Organizations Based on Type</h1>
+            </header>
+            </Segment>
+        
         </Grid.Row>
-       <Segment>
+        <Segment>
         <ActionTabs/> 
         </Segment>
 
+            <Segment>
+        <Container>
+            <Segment>
+            <header>
+            <h1 style={{marginTop:20,marginBottom:20}}>Discussion Area</h1>
+            </header>
+            </Segment>
+            <Segment>
+
         <Grid columns={2} style={{marginTop:20}}divided>
-        <Grid.Row >
-            <h1 className="seven">Recent Posts</h1>
-        </Grid.Row>
+
+        
         <Grid.Row>
-            
+
          {//if user
             user && (
                 <Grid.Column>
@@ -206,7 +246,12 @@ function Home() {
             )
             }   
          {loading?(
-             <h1>Loading Users' Posts...</h1>
+             <>
+             <h1>Loading User Posts...</h1>
+             <Dimmer active>
+             <Loader />
+             </Dimmer>
+             </>
          ):(
             <Transition.Group>
                 {
@@ -219,57 +264,54 @@ function Home() {
             </Transition.Group>
          )}
         </Grid.Row>
-        <Container>
 
-            
-        <Grid.Row>
+        </Grid>
+        </Segment>
+
+        </Container>
+        </Segment >
+
+        <Grid columns={2} style={{marginTop:20}}divided>
+
 
         {user &&(
-            <>
-            <div className='seven'>
+                    <Segment>
+                    <Grid.Row>
+                <header>
+            
                 <h1 >Subscribed Organizations' Posts</h1>
-                
+                </header>
+
                 <SubscribedOrgsHelper user={user}/>
-                </div>
-            </>
+                </Grid.Row>
+                </Segment>
+                
         )
         }
-        </Grid.Row>
+        </Grid>
 
-        {/* <Segment padded>
-        {//if user
-            user && (
-                <div>
-                    <Transition.Group>
-                    <Segment className="seven">
-                    <h1>Create a new Organization</h1>
-                    </Segment>
-                    
-                    <OrgForm/>
-                    </Transition.Group>
-                </div>
-            )
-            }
-        </Segment> */}
-
-        
-        
-        </Container>
+        <Segment style={{marginTop:30,marginBottom:30}}>
+            <Segment>
+            <header>
+                <h1 style={{marginTop:30,marginBottom:30}}>Recent Organizations' Posts</h1>
+                </header>
+                </Segment>
+                <Segment>
+        <Grid columns={2} style={{marginTop:10}}divided>
         
 
-        <>
-            <div className='seven'>
-                <h1 >Recent Organizations' Posts</h1>
-                
-                </div>
-            </>
-        
+
         <Grid.Row>
-        
-       
-          
+
+
+
          {loadingOrgs?(
-             <h1>Loading Organizations's Posts...</h1>
+             <>
+             <h1>Loading Organizations' Posts</h1>
+             <Dimmer active>
+             <Loader />
+             </Dimmer>
+             </>
          ):(
             <Transition.Group>
                 {
@@ -282,13 +324,15 @@ function Home() {
             </Transition.Group>
          )}
         </Grid.Row>
-        
-    </Grid>
-    
+        </Grid>
+        </Segment>
+        </Segment>       
+
+
+    </Segment>
     </>
     );
 }
-
 
 const FETCH_ACTIONS_OWNER_QUERY = gql`
    query($username:String!){
@@ -308,8 +352,4 @@ const FETCH_ACTIONS_OWNER_QUERY = gql`
             startDate
             endDate
          }
-  }
-  
-`;
-
-export default Home;
+   }`

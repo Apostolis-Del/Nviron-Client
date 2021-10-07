@@ -185,7 +185,7 @@ function SingleOrg(props){
                     {facebookLink?(
 
                         <Button color='facebook' as={Link} to={{pathname:facebookLink}} target="_blank">
-                            <Icon name='facebook' /> Facebook {facebookLink}
+                            <Icon name='facebook' /> Facebook 
                         </Button>
                         ):(
                             <Button color='facebook' >
@@ -205,7 +205,7 @@ function SingleOrg(props){
                     <li className="sidebarListItem">
                     {youtubeLink?(
                         <Button color='youtube' as={Link} to={{pathname:youtubeLink}} target="_blank">
-                            <Icon name='youtube' /> YouTube {youtubeLink}
+                            <Icon name='youtube' /> YouTube
                         </Button>
                         ):(
                             <Button color='youtube' >
@@ -227,7 +227,7 @@ function SingleOrg(props){
                     {twitterLink?(
 
                         <Button color='twitter' as={Link}   to={{pathname:twitterLink}} target="_blank">
-                                <Icon name='twitter' /> Twitter {twitterLink}
+                                <Icon name='twitter' /> Twitter 
 
                         </Button>
                         ):(
@@ -249,7 +249,7 @@ function SingleOrg(props){
                     <li className="sidebarListItem" as={Link}  to={{pathname:instagramLink}} target="_blank">
                     {instagramLink?(
                         <Button color='instagram'>
-                                <Icon name='instagram' /> Instagram {instagramLink}
+                                <Icon name='instagram' /> Instagram 
                         </Button>
                          ):(
                             <Button color='instagram' >

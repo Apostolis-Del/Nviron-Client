@@ -29,7 +29,7 @@ function ActionCard({act:{id,actName,actDescription,actLocationLat,actLocationLo
                 <Image
                 floated='right'
                 size='mini'
-                src='https://react.semantic-ui.com/images/avatar/large/jenny.jpg'
+                src='https://www.pngall.com/wp-content/uploads/2016/06/Environment-Download-PNG.png'
                 />
                 <Card.Header>
                 {moment().isBefore(moment(endDate))&&(
