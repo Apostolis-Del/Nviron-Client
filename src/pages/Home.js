@@ -103,8 +103,6 @@ function Home() {
 
                            <Grid.Column key={act.id} style={{marginBottom:20}}>
                               <ActionCard act={act} username={userName}/>
-
-                              <ActionCard act={act}  username={userName}/>
                            </Grid.Column>
                        ))
                                                        

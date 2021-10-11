@@ -32,8 +32,7 @@ function SubscribedOrgs({user,subscribed:{orgName}}){
           
      return(
          <>
-         <Grid columns={2} divided>
-                <Grid.Row>
+         
          {loadingOrgposts?(
              <h3>Wait for orgPosts by name to load</h3>
          ):(
@@ -41,17 +40,13 @@ function SubscribedOrgs({user,subscribed:{orgName}}){
                 {
                      orgposts && orgposts.map(orgpost=>
                          
-                        <Grid.Column style={{marginBottom:60}}>
 
                            <OrgPostCard orgpost={orgpost} />
-                           </Grid.Column>
 
                     )
                 }
             </Transition.Group>
          )}
-         </Grid.Row>
-            </Grid>
         </>
      );
  }

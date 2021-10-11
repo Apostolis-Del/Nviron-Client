@@ -108,7 +108,7 @@ function SingleAction(props){
                         <Segment>
                             <h4>Start Date:</h4>
                             <h4>{moment(startDate).format('LLLL')}</h4>
-                            <h4>Start Date:</h4>
+                            <h4>End Date:</h4>
                             <h4>{moment(endDate).format('LLLL')}</h4>
 
                         </Segment>
@@ -210,8 +210,8 @@ function SingleAction(props){
 
                         <div className="rightbarInfoItem">
 
-                            <h4 className="rightbarInfoKey">Description:</h4>
-                            <span className="rightbarInfoValue">{actDescription}</span>
+                            {/* <h4 className="rightbarInfoKey">Description:</h4>
+                            <span className="rightbarInfoValue">{actDescription}</span> */}
                         </div>
                         <hr className="sidebarHr" />
 

@@ -53,9 +53,9 @@ header h1:after {
   .seven h1:after,.seven h1:before {
       content: " ";
       display: block;
-      border-bottom: 1px solid #21ba45
+      border-bottom: 1px solid #797979
       ;
-      border-top: 1px solid #21ba45
+      border-top: 1px solid #797979
       ;
       height: 5px;
     background-color:#f8f8f8;
