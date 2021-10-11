@@ -269,16 +269,20 @@ function Home() {
         </Container>
         </Segment >
 
-        <Grid columns={2} style={{marginTop:20}}divided>
+        <Grid  style={{marginTop:20}}divided>
 
-
+        <Segment style={{marginTop:30,marginBottom:30}}>
+            <Segment>
+            <header>
+                <h1 style={{marginTop:30,marginBottom:30}}>Subscribed Organizations' Posts</h1>
+                </header>
+                </Segment>
+                    
+        </Segment>
         {user &&(
                     <Segment>
                     <Grid.Row>
-                <header>
-            
-                <h1 >Subscribed Organizations' Posts</h1>
-                </header>
+                
 
                 <SubscribedOrgsHelper user={user}/>
                 </Grid.Row>
