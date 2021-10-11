@@ -269,7 +269,7 @@ function Home() {
         </Container>
         </Segment >
 
-        <Grid  style={{marginTop:20}}divided>
+        {/* <Grid  style={{marginTop:20}}divided>
 
         <Segment style={{marginTop:30,marginBottom:30}}>
             <Segment>
@@ -290,7 +290,36 @@ function Home() {
                 
         )
         }
+        </Grid> */}
+
+
+        <Segment style={{marginTop:30,marginBottom:30}}>
+            <Segment>
+            <header>
+                <h1 style={{marginTop:30,marginBottom:30}}>Subscribed Organizations' Posts</h1>
+                </header>
+                </Segment>
+                <Segment>
+
+
+        <Grid  style={{marginTop:10}}divided>
+
+        <Grid.Row>
+
+        
+            <Transition.Group>
+                
+                <SubscribedOrgsHelper user={user}/>
+
+                
+            </Transition.Group>
+         
+        </Grid.Row>
         </Grid>
+        </Segment>
+    </Segment>
+
+
 
         <Segment style={{marginTop:30,marginBottom:30}}>
             <Segment>
@@ -299,13 +328,11 @@ function Home() {
                 </header>
                 </Segment>
                 <Segment>
-        <Grid columns={2} style={{marginTop:10}}divided>
-        
 
+
+        <Grid columns={2} style={{marginTop:10}}divided>
 
         <Grid.Row>
-
-
 
          {loadingOrgs?(
              <>
