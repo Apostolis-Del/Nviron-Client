@@ -221,7 +221,7 @@ function Home() {
         <Segment>
         <ActionTabs/> 
         </Segment>
-
+</Segment>
             <Segment>
         <Container>
             <Segment>
@@ -362,7 +362,6 @@ function Home() {
         </Segment>       
 
 
-    </Segment>
     </>
     );
 }
