@@ -292,6 +292,7 @@ function Home() {
         }
         </Grid> */}
 
+{user &&(
 
         <Segment style={{marginTop:30,marginBottom:30}}>
             <Segment>
@@ -317,7 +318,10 @@ function Home() {
         </Grid.Row>
         </Grid>
         </Segment>
+        
     </Segment>
+    )
+}
 
 
 
